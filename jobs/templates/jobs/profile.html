@@ -1,0 +1,2 @@
+{% extends "jobs/base.html" %}{% block content %}<h2>Your profile</h2><form class="card" method="post">{% csrf_token %}{{ form.as_p }}<button>Save</button></form>
+<p class="muted">Paste your resume text — skills are extracted automatically and used for matching.</p>{% endblock %}

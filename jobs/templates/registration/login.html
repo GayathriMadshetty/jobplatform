@@ -1,0 +1,1 @@
+{% extends "jobs/base.html" %}{% block content %}<h2>Login</h2><form class="card" method="post">{% csrf_token %}{{ form.as_p }}<button>Login</button></form>{% endblock %}

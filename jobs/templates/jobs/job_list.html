@@ -1,0 +1,11 @@
+{% extends "jobs/base.html" %}{% block content %}
+<form class="card row" method="get"><input name="q" value="{{ q }}" placeholder="Try: python developer who builds APIs" style="flex:1;min-width:200px">
+<input name="location" placeholder="Location" value="{{ request.GET.location }}"><select name="type"><option value="">Any type</option>
+{% for k,v in types %}<option value="{{ k }}" {% if request.GET.type == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+<label><input type="checkbox" name="remote" value="1" {% if request.GET.remote %}checked{% endif %}> Remote</label><button>Search</button></form>
+{% for r in rows %}<div class="card"><div class="row"><a href="{% url 'job_detail' r.job.pk %}"><b>{{ r.job.title }}</b></a>
+<span class="muted">{{ r.job.company }} · {{ r.job.location }}</span>
+<span style="margin-left:auto">{% if r.match != None %}<span class="badge good">{{ r.match }}% match</span>{% endif %}{% if r.relevance %}<span class="badge">{{ r.relevance }}% relevant</span>{% endif %}</span></div>
+<div>{% if r.job.remote %}<span class="badge">Remote</span>{% endif %}<span class="badge">{{ r.job.get_job_type_display }}</span>{% if r.job.salary %}<span class="badge">{{ r.job.salary }}</span>{% endif %}</div>
+<p class="muted">{{ r.job.description|truncatechars:140 }}</p></div>
+{% empty %}<p class="muted">No jobs found. Run <code>python manage.py seed_jobs</code> or post one.</p>{% endfor %}{% endblock %}

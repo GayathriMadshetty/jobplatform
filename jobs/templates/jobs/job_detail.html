@@ -1,0 +1,10 @@
+{% extends "jobs/base.html" %}{% block content %}<div class="card"><h2>{{ job.title }}</h2>
+<p class="muted">{{ job.company }} · {{ job.location }} · {{ job.get_job_type_display }} {{ job.salary }}</p>
+<p>{{ job.description|linebreaks }}</p>{% for s in job.skill_list %}<span class="badge">{{ s }}</span>{% endfor %}</div>
+{% if user.is_authenticated %}<div class="card"><div class="score">{{ score }}% AI match</div>
+<p>Matched: {% for s in matched %}<span class="badge good">{{ s }}</span>{% empty %}<span class="muted">none yet</span>{% endfor %}</p>
+<p>Skill gaps: {% for s in missing %}<span class="badge bad">{{ s }}</span>{% empty %}<span class="muted">none 🎉</span>{% endfor %}</p></div>
+{% if applied %}<div class="card">✅ You've applied to this job.</div>{% else %}
+<form class="card" method="post" action="{% url 'apply' job.pk %}">{% csrf_token %}{{ form.cover_note }}<br><br><button>Apply now</button></form>{% endif %}
+{% else %}<div class="card"><a href="{% url 'login' %}">Log in</a> to see your match score and apply.</div>{% endif %}
+{% if similar %}<h3>Similar jobs</h3>{% for j in similar %}<div class="card"><a href="{% url 'job_detail' j.pk %}">{{ j.title }}</a> <span class="muted">· {{ j.company }}</span></div>{% endfor %}{% endif %}{% endblock %}

@@ -1,0 +1,3 @@
+{% extends "jobs/base.html" %}{% block content %}<h2>My applications</h2>{% for a in apps %}<div class="card row"><a href="{% url 'job_detail' a.job.pk %}">{{ a.job.title }}</a>
+<span class="muted">{{ a.job.company }}</span><span class="badge" style="margin-left:auto">{{ a.get_status_display }}</span><span class="badge good">{{ a.match_score }}%</span></div>
+{% empty %}<p class="muted">Nothing yet.</p>{% endfor %}{% endblock %}

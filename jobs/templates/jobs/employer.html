@@ -1,0 +1,5 @@
+{% extends "jobs/base.html" %}{% block content %}<h2>Applicants (ranked by AI match)</h2>
+{% for a in apps %}<div class="card"><div class="row"><b>{{ a.user.username }}</b><span class="muted">→ {{ a.job.title }}</span><span class="score" style="margin-left:auto">{{ a.match_score }}%</span></div>
+<p>{{ a.cover_note }}</p><form method="post" class="row">{% csrf_token %}<input type="hidden" name="app_id" value="{{ a.pk }}"><select name="status">
+{% for k,v in statuses %}<option value="{{ k }}" {% if a.status == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select><button>Update</button></form></div>
+{% empty %}<p class="muted">No applicants yet.</p>{% endfor %}{% endblock %}

@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}SmartHire{% endblock %}</title>
+<style>
+:root{--b:#4f46e5;--bg:#f6f7fb;--c:#fff;--t:#1f2430;--m:#6b7280}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1117;--c:#1a1d27;--t:#e8eaf0;--m:#9aa0ae}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--t)}
+nav{background:var(--c);padding:12px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #8883}
+nav b{color:var(--b);font-size:18px;margin-right:auto}a{color:var(--b);text-decoration:none}
+main{max-width:900px;margin:24px auto;padding:0 16px}.card{background:var(--c);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #8883}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;background:#4f46e522;color:var(--b);margin-right:4px}
+.good{background:#16a34a22;color:#16a34a}.bad{background:#dc262622;color:#dc2626}.muted{color:var(--m)}
+input,select,textarea{padding:8px;border-radius:8px;border:1px solid #8886;background:var(--c);color:var(--t);font:inherit;max-width:100%}
+textarea{width:100%;min-height:140px}button,.btn{background:var(--b);color:#fff;border:0;padding:8px 16px;border-radius:8px;cursor:pointer;font:inherit}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.score{font-size:22px;font-weight:700;color:var(--b)}.msg{padding:10px;border-radius:8px;background:#4f46e522;margin-bottom:12px}
+</style></head><body>
+<nav><b>🎯 SmartHire</b><a href="{% url 'job_list' %}">Jobs</a>
+{% if user.is_authenticated %}<a href="{% url 'recommendations' %}">For you</a><a href="{% url 'applications' %}">Applications</a>
+<a href="{% url 'post_job' %}">Post job</a><a href="{% url 'employer' %}">Employer</a><a href="{% url 'profile' %}">Profile</a>
+<form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button>Logout ({{ user.username }})</button></form>
+{% else %}<a href="{% url 'login' %}">Login</a><a href="{% url 'register' %}">Sign up</a>{% endif %}</nav>
+<main>{% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}{% block content %}{% endblock %}</main></body></html>
